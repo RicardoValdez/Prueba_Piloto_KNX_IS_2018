@@ -1,0 +1,1 @@
+Programación de control de la cinta de LEDs "Adafruit NeoPixel", utilizada para simular las persianas mototizadas del sistema domótico.
