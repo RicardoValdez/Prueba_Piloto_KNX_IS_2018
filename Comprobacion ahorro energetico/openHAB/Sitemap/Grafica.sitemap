@@ -1,0 +1,12 @@
+sitemap Grafica label="Ya me quiero ir" {
+
+	Frame label="Que cansado" {
+		Switch item=light
+		Frame	{
+					Switch item=Grafico label="Grafico humedad" mappings=[0="Hora", 1="Día", 2="Semana"]
+					Chart item=luz period=h refresh=300 legend=true visibility=[Grafico==0, Grafico=="Uninitialized"]
+					Chart item=luz period=D refresh=300 legend=true visibility=[Grafico==1]
+					Chart item=luz period=W refresh=300 legend=true visibility=[Grafico==2]	
+		}
+	}
+}

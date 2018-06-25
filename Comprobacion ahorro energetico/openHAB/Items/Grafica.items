@@ -1,0 +1,3 @@
+Switch	luz		"Luz" 	<light>	{knx="12/0/0"}
+
+Number  Grafico	"chart"	<line>
