@@ -1,0 +1,50 @@
+//Grupos según área
+Group	jardin 			"Jardin"		<garden>
+Group	cocina 			"Cocina"		<kitchen>
+Group 	sala_comun		"Sala comun"	<sofa>
+
+//Grupos para gráficos 
+Group g_temp
+Group g_CO2
+Group g_humedad
+Number   Temp_Grafico	"chart temp_data"	<line>
+Number   Hum_Grafico    "chart hum_data"	<line>
+Number   CO2_Grafico    "chart co2_data"	<line>
+
+//Declaración para escenas
+Number escenas "Número de escena [%s]"
+Number Countdown "My Countdown [%d]"
+
+//Declaracion de luces
+Switch L_E07_01 "Luz cocina" 		<light> 	(cocina, apagado_general)  		{knx="9/1/0"}
+Switch L_E08_01 "Luz sala comun" 	<light> 	(sala_comun, apagado_general) 	{knx="9/2/0"}
+Switch L_E09_01 "Luz jardin" 		<light> 	(jardin, apagado_general) 		{knx="9/0/0"}
+
+//Declaracion de sensores de temperatura
+Number T_E07_01 "Temperatura cocina [%.1f °C]" 		<temperature> 	(cocina, g_temp) 		{knx="10/1/5"}
+Number T_E08_01 "Temperatura sala comun [%.1f °C]" 	<temperature> 	(sala_comun, g_temp) 	{knx="10/1/6"}
+
+//Declaracion de sensores de humedad
+Number H_E07_01 "Humedad cocina [%.0f %%]" 		<humidity> 	(cocina, g_humedad) 		{knx="5.001:10/1/0"}
+Number H_E08_01 "Humedad sala comun [%.0f %%]" 	<humidity> 	(sala_comun, g_humedad) 	{knx="5.001:10/1/1"}
+
+//Declaracion de sensores de CO2
+Number CO2_E07_01 "CO2 cocina [%.0f ppm]" 		<carbondioxide> 	(cocina, g_CO2) 		{knx="10/1/2"}
+Number CO2_E08_01 "CO2 sala comun [%.0f ppm]" 	<carbondioxide> 	(sala_comun, g_CO2) 	{knx="10/1/3"}
+
+//Declaracion de sensores de inundación
+Switch FA_E07_01 "Fuga de agua cocina" 		<flow> 	(cocina) 		{knx="10/0/2"}
+
+//Declaracion de sensores de presencia
+Switch P_E07_01 "Presencia cocina" 		<motion> 	(cocina, sensores) 		{knx="10/1/8"}
+Switch P_E08_01 "Presencia sala comun" 	<motion> 	(sala_comun, sensores) 	{knx="10/1/9"}
+Switch P_E09_01 "Presencia jardin" 		<motion> 	(jardin, sensores)		{knx="10/1/7"}
+
+//Declaracion de estación meteorológica
+Switch EM_R_E09_01 "Lluvia"						 	<rain> 			(jardin)	{knx="10/0/0"}
+Number EM_W_E09_01 "Velocidad viento [%.0f km/h]" 	<wind> 			(jardin)	{knx="10/1/13"}
+Number EM_T_E09_01 "Temperatura jardin [%.1f °C]" 	<temperature> 	(jardin, g_temp)	{knx="10/1/4"}
+
+//Declaracion de persianas
+Rollershutter B_E07_01 "Persiana cocina" 		<blinds> 	(cocina) 		{knx="7/1/0, 7/1/1"}
+Rollershutter B_E08_01 "Persiana sala comun" 	<blinds> 	(sala_comun) 	{knx="7/2/0, 7/2/1"}

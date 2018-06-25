@@ -1,0 +1,68 @@
+sitemap BMS label="Prueba Piloto" {
+
+	Frame label="Casa de invitados VIE" {
+		Group item=jardin
+		Group item=sala_comun
+		Group item=cocina
+	}
+	
+	Text label="Información de la vivienda" icon="house" {
+		Frame label="Escenas" {
+			Switch item=escenas mappings=[0="Apagado general",1="Cocina",2="Nocturna"]
+		}
+		Frame label="Sensores de presencia" {
+			Default item=P_E07_01
+			Default item=P_E08_01
+			Default item=P_E09_01
+		}
+		Frame label="Control de luces" {
+			Switch item=L_E07_01
+			Switch item=L_E08_01
+			Switch item=L_E09_01
+		}
+		Frame label="Control de persianas" {
+			Switch item=B_E07_01
+			Switch item=B_E08_01
+		}
+		Frame label="Sensores de humedad" {
+			Text item=H_E07_01
+			Text item=H_E08_01
+			Frame	{
+				Switch item=Hum_Grafico label="Grafico humedad" mappings=[0="Hora", 1="Día", 2="Semana"]
+				Chart item=g_humedad period=h refresh=300 legend=true visibility=[Hum_Grafico==0, Hum_Grafico=="Uninitialized"]
+				Chart item=g_humedad period=D refresh=300 legend=true visibility=[Hum_Grafico==1]
+				Chart item=g_humedad period=W refresh=300 legend=true visibility=[Hum_Grafico==2]	
+			}
+		}
+		Frame label="Sensores de CO2" {
+			Text item=CO2_E07_01
+			Text item=CO2_E08_01
+			Frame	{
+				Switch item=CO2_Grafico label="Grafico CO2" mappings=[0="Hora", 1="Día", 2="Semana"]
+				Chart item=g_CO2 period=h refresh=300 legend=true visibility=[CO2_Grafico==0, CO2_Grafico=="Uninitialized"]
+				Chart item=g_CO2 period=D refresh=300 legend=true visibility=[CO2_Grafico==1]
+				Chart item=g_CO2 period=W refresh=300 legend=true visibility=[CO2_Grafico==2]	
+			}
+		}
+		Frame label="Sensores de temperatura" {
+			Text item=T_E07_01
+			Text item=T_E08_01
+			Text item=EM_T_E09_01
+			Frame	{
+				Switch item=Temp_Grafico label="Grafico humedad" mappings=[0="Hora", 1="Día", 2="Semana"]
+				Chart item=g_temp period=h refresh=300 legend=true visibility=[Temp_Grafico==0, Temp_Grafico=="Uninitialized"]
+				Chart item=g_temp period=D refresh=300 legend=true visibility=[Temp_Grafico==1]
+				Chart item=g_temp period=W refresh=300 legend=true visibility=[Temp_Grafico==2]	
+			}
+		}
+		Frame label="Sensores de viento" {
+			Text item=EM_W_E09_01
+		}
+		Frame label="Sensor de lluvia" {
+			Default item=EM_R_E09_01
+		}
+		Frame label="Sensores de inundación" {
+			Default item=FA_E07_01
+		}
+	}
+}

@@ -1,0 +1,106 @@
+var tiempo_movimiento_completo = 5300
+
+//AVISOS TELEGRAM
+	rule "Telegram Temperatura Cocina"
+		when
+		  Item T_E07_01 received update
+		then
+		  if ( (T_E07_01.state as Number) >= 35)	{
+			sendTelegram("BMS", "¡PRECAUCIÓN! La temperatura en la cocina es mayor a 35°C.")
+		  }
+	end
+	
+	rule "Telegram Temperatura Sala Comun"
+		when
+		  Item T_E08_01 received update
+		then
+		  if ( (T_E07_01.state as Number) >= 35)	{
+			sendTelegram("BMS", "¡PRECAUCIÓN! La temperatura en la sala común es mayor a 35°C.")
+		  }
+	end
+	
+	rule "Telegram CO2 Cocina mayor a 800ppm"
+		when
+		  Item CO2_E07_01 received update
+		then
+		  if ( (CO2_E07_01.state as Number) >= 800 < 1000)	{
+			sendTelegram("BMS", "¡PRECAUCIÓN! La concentración de CO2 en la cocina podría resultar nociva.")
+		  }
+	end
+	
+	rule "Telegram CO2 Sala Comun mayor a 800ppm"
+		when
+		  Item CO2_E08_01 received update
+		then
+		  if ( (CO2_E08_01.state as Number) >= 800 < 1000)	 {
+			sendTelegram("BMS", "¡PRECAUCIÓN! La concentración de CO2 en la sala común podría resultar nociva.")
+		  }
+	end
+	
+	rule "Telegram CO2 Cocina mayor a 1000ppm"
+		when
+		  Item CO2_E07_01 received update
+		then
+		  if ( (CO2_E07_01.state as Number) >= 1000)	{
+			sendTelegram("BMS", "¡ALERTA! La concentración de CO2 en la cocina es peligrosa.")
+		  }
+	end
+	
+	rule "Telegram CO2 Sala Comun mayor a 1000ppm"
+		when
+		  Item CO2_E08_01 received update
+		then
+		  if ( (CO2_E08_01.state as Number) >= 1000)	{
+			sendTelegram("BMS", "¡ALERTA! La concentración de CO2 en la sala común es peligrosa.")
+		  }
+	end
+	
+	rule "Telegram Inundación Cocina"
+		when
+		  Item FA_E07_01 changed from OFF to ON
+		then
+			sendTelegram("BMS", "¡ALERTA! Se ha detectado una fuga de agua en la cocina.")
+	end
+	
+	rule "Telegram Lluvia"
+		when
+		  Item EM_R_E09_01 changed from OFF to ON
+		then
+			sendTelegram("BMS", "¡LA ROPA! Ha comenzado a llover.")
+	end
+	
+//ESCENAS
+	rule "my scenes switch"
+		when
+			Item escenas changed
+		then
+			switch (escenas.state) {
+				//APAGADO GENERAL
+				case 0: {
+					L_E07_01.sendCommand(OFF)
+					L_E08_01.sendCommand(OFF)
+					L_E09_01.sendCommand(OFF)
+					B_E07_01.sendCommand(DOWN)
+					B_E08_01.sendCommand(DOWN)
+				}
+				//COCINA
+				case 1: {
+					L_E07_01.sendCommand(ON)
+					L_E08_01.sendCommand(OFF)
+					L_E09_01.sendCommand(OFF)
+					B_E07_01.sendCommand(UP)
+					B_E08_01.sendCommand(UP)
+				}
+				//NOCTURNA
+				case 2: {
+					L_E07_01.sendCommand(OFF)
+					L_E08_01.sendCommand(ON)
+					L_E09_01.sendCommand(ON)
+					B_E07_01.sendCommand(DOWN)
+					B_E08_01.sendCommand(UP)
+				}
+				default: { 
+					logInfo("escenas","entrada incorrecta: {}",escenas.state)
+				}
+			}
+	end
